@@ -1,4 +1,4 @@
-package com.example.sqlite
+package com.example.sqlite.Database
 
 import android.content.Context
 import android.database.Cursor

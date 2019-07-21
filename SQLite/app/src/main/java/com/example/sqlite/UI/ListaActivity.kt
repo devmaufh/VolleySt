@@ -1,12 +1,13 @@
-package com.example.sqlite
+package com.example.sqlite.UI
 
-import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sqlite.Adapters.StudentListAdapter
+import com.example.sqlite.Database.adBD
+import com.example.sqlite.R
+import com.example.sqlite.Models.Student
 
 class ListaActivity : AppCompatActivity() {
 
@@ -19,7 +20,7 @@ class ListaActivity : AppCompatActivity() {
 
 
         val rview=findViewById<RecyclerView>(R.id.lista_rv)
-        val adapter=StudentListAdapter(this)
+        val adapter= StudentListAdapter(this)
         rview.adapter=adapter
 
 
@@ -39,10 +40,15 @@ class ListaActivity : AppCompatActivity() {
 
     fun DbStudentList():List<Student>{
         var students= ArrayList<Student>()
-        val database=adBD(this)
+        val database= adBD(this)
         val cursor=database.consulta("SELECT noControl,nomEst,carrera,edadEst FROM Estudiante")
         if(cursor!!.moveToFirst())do{
-            val stu=Student(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3))
+            val stu= Student(
+                cursor.getString(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3)
+            )
             students.add(stu)
         }
         while(cursor!!.moveToNext())

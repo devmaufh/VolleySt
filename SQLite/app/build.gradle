@@ -35,4 +35,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+
+    //Volley dependecy
+    implementation 'com.android.volley:volley:1.1.1'
+
 }

@@ -1,10 +1,12 @@
-package com.example.sqlite
+package com.example.sqlite.UI
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.example.sqlite.Database.adBD
+import com.example.sqlite.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,14 +24,14 @@ class MainActivity : AppCompatActivity() {
 
     //Cambia a la siguiente actividad
     fun navigateToList(v:View){
-        startActivity(Intent(this,ListaActivity::class.java))
+        startActivity(Intent(this, ListaActivity::class.java))
     }
 
 
     fun searchStudent(v: View){
         if(!etcontrol.text.isEmpty()){
             control=etcontrol.text.toString()
-            val database =adBD(this)
+            val database = adBD(this)
             val tupla=database.consulta("SELECT noControl,nomEst,carrera,edadEst FROM Estudiante where noControl='$control'")
             if(tupla!!.moveToFirst()){
                 etnombre.setText(tupla.getString(0))
@@ -47,14 +49,15 @@ class MainActivity : AppCompatActivity() {
     fun addStudent(v:View) {
         if (!etcontrol.text.isEmpty() && !etcarrera.text.isEmpty() && !etedad.text.isEmpty() && !etnombre.text.isEmpty()) {
             getValues()
-            val database=adBD(this)
+            val database= adBD(this)
+
             val tupla=database.Ejecuta("INSERT INTO Estudiante(noControl,nomEst,carrera,edadEst) VALUES(" +
                     "'$control'," +
                     "'$nom'," +
                     "'$carrera'," +
                     "'$edad')")
             if(tupla==1){
-                Toast.makeText(this, "Registro insertado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "DB: Registro insertado", Toast.LENGTH_SHORT).show()
                 clearFields()
             }else{
                 Toast.makeText(this, "Error al insertar", Toast.LENGTH_SHORT).show()
@@ -66,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     fun updateStudent(v:View){
         if (!etcontrol.text.isEmpty() && !etcarrera.text.isEmpty() && !etedad.text.isEmpty() && !etnombre.text.isEmpty()) {
             getValues()
-            val database=adBD(this)
+            val database= adBD(this)
             val tupla=database.Ejecuta("update Estudiante set nomEst='$nom',carrera='$carrera',edadEst=$edad     WHERE noControl='$control'")
             if(tupla==1){
                 Toast.makeText(this, "Registro actualizado", Toast.LENGTH_SHORT).show()
@@ -80,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     fun deleteStudent(v:View){
         if(!etcontrol.text.isEmpty()){
             control=etcontrol.text.toString()
-            val database =adBD(this)
+            val database = adBD(this)
             val tupla=database.Ejecuta("DELETE from Estudiante where noControl='$control'")
             if(tupla==1){
                 Toast.makeText(this, "Registro eliminado", Toast.LENGTH_SHORT).show()
@@ -106,4 +109,6 @@ class MainActivity : AppCompatActivity() {
         etcontrol.setText("")
         etcontrol.requestFocus()
     }
+
+
 }
